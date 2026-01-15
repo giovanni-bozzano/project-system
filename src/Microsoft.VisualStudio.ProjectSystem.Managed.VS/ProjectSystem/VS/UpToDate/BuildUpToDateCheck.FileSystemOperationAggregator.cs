@@ -174,8 +174,7 @@ internal sealed partial class BuildUpToDateCheck
 
                             // TODO add retry logic in case of failed copies? MSBuild does this with CopyRetryCount and CopyRetryDelayMilliseconds
 
-                            FileInfo destinationFileInfo = new(destination);
-                            if (!destinationFileInfo.Attributes.HasFlag(FileAttributes.ReparsePoint))
+                            if (!_fileSystem.IsReparsePoint(destination))
                             {
                                 // Copy the file
                                 _fileSystem.CopyFile(source, destination, overwrite: true, clearReadOnly: true);
